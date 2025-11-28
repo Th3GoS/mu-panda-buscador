@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscador de Perfiles Panda MU</title>
-    <!-- Carga de Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuración de color y fuente -->
-    <script>
+    <!-- Carga de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de color y fuente --><script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -40,14 +38,15 @@
 </head>
 <body class="font-sans text-white">
     <div class="min-h-screen p-4 sm:p-8 flex flex-col items-center">
-        <!-- Encabezado -->
-        <header class="text-center mb-8">
+        <!-- Encabezado --><header class="text-center mb-8">
             <h1 class="text-4xl sm:text-5xl font-extrabold text-mu-accent mb-2">Buscador de Personajes</h1>
             <p class="text-gray-400 text-lg">Panda MU Profile Checker | Hecho por Th3GoS</p>
+            <!-- Nuevo enlace a Discord con animación --><a href="https://discord.com/users/th3gos" target="_blank" class="text-mu-primary hover:text-indigo-400 text-base font-semibold transition-colors duration-300 mt-1 block animate-bounce">
+                👋 ¡Contáctame en Discord! @th3gos
+            </a>
         </header>
 
-        <!-- Formulario de Búsqueda -->
-        <div class="w-full max-w-xl bg-mu-dark p-6 rounded-xl shadow-2xl mb-8">
+        <!-- Formulario de Búsqueda --><div class="w-full max-w-xl bg-mu-dark p-6 rounded-xl shadow-2xl mb-8">
             <div class="flex flex-col sm:flex-row gap-4">
                 <input
                     type="text"
@@ -66,8 +65,7 @@
             <p id="errorMessage" class="text-red-400 mt-3 hidden text-sm">Por favor, introduce un nombre válido.</p>
         </div>
 
-        <!-- Contenedor del Perfil (iframe) -->
-        <main class="w-full max-w-4xl bg-white rounded-xl overflow-hidden shadow-2xl">
+        <!-- Contenedor del Perfil (iframe) --><main class="w-full max-w-4xl bg-white rounded-xl overflow-hidden shadow-2xl">
             <iframe id="profile-display" title="Perfil del Jugador"></iframe>
         </main>
     </div>
@@ -134,10 +132,9 @@
         window.onload = () => {
              // Puedes dejar el campo vacío si prefieres que el usuario busque primero.
              // Pero lo dejaremos con el ejemplo Th3GoS como punto de partida.
-             playerNameInput.value = "Th3GoSs";
+             playerNameInput.value = "Th3GoS";
              loadProfile("Th3GoS"); 
         };
     </script>
 </body>
-
 </html>
