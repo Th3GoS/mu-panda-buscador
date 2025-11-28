@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Perfiles Panda MU</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de color y fuente -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'mu-dark': '#1a202c', // Fondo oscuro
+                        'mu-primary': '#4f46e5', // Púrpura/Azul vibrante
+                        'mu-accent': '#fcd34d', // Dorado/Amarillo
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilo para el contenedor principal para centrar */
+        body {
+            background-color: #111827; /* Gris muy oscuro */
+        }
+        /* Estilo para asegurar que el iframe sea visible y usable */
+        #profile-display {
+            width: 100%;
+            height: 80vh; /* 80% de la altura de la ventana */
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="font-sans text-white">
+    <div class="min-h-screen p-4 sm:p-8 flex flex-col items-center">
+        <!-- Encabezado -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-mu-accent mb-2">Buscador de Personajes</h1>
+            <p class="text-gray-400 text-lg">Panda MU Profile Checker | Hecho por Th3GoS</p>
+        </header>
+
+        <!-- Formulario de Búsqueda -->
+        <div class="w-full max-w-xl bg-mu-dark p-6 rounded-xl shadow-2xl mb-8">
+            <div class="flex flex-col sm:flex-row gap-4">
+                <input
+                    type="text"
+                    id="playerName"
+                    placeholder="Ingresa el nombre del personaje (ej: Marielis)"
+                    class="flex-grow p-3 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mu-primary"
+                    required
+                >
+                <button
+                    id="searchButton"
+                    class="px-6 py-3 bg-mu-primary text-white font-bold rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md transform hover:scale-[1.02]"
+                >
+                    Buscar Perfil
+                </button>
+            </div>
+            <p id="errorMessage" class="text-red-400 mt-3 hidden text-sm">Por favor, introduce un nombre válido.</p>
+        </div>
+
+        <!-- Contenedor del Perfil (iframe) -->
+        <main class="w-full max-w-4xl bg-white rounded-xl overflow-hidden shadow-2xl">
+            <iframe id="profile-display" title="Perfil del Jugador"></iframe>
+        </main>
+    </div>
+
+    <script>
+        // URL base del perfil de Panda MU
+        const BASE_URL = "https://www.pandamu.com/profile/player/req/";
+        const playerNameInput = document.getElementById('playerName');
+        const searchButton = document.getElementById('searchButton');
+        const profileDisplay = document.getElementById('profile-display');
+        const errorMessage = document.getElementById('errorMessage');
+
+        /**
+         * Función principal que carga el perfil del jugador.
+         * @param {string} name - Nombre del personaje a buscar.
+         */
+        function loadProfile(name) {
+            // Limpia el nombre para evitar espacios extra y caracteres no válidos
+            const cleanName = name.trim();
+
+            if (cleanName === "") {
+                errorMessage.classList.remove('hidden');
+                profileDisplay.src = "about:blank"; // Limpia el iframe si no hay entrada
+                return;
+            }
+
+            // Oculta el mensaje de error si la entrada es válida
+            errorMessage.classList.add('hidden');
+
+            // Construye la URL completa
+            const url = BASE_URL + cleanName + "/";
+            
+            // Asigna la URL al iframe para que cargue la página
+            profileDisplay.src = url;
+            
+            // Opcional: mostrar un mensaje si la carga falla o es lenta (simulación simple)
+            profileDisplay.onload = () => {
+                console.log(`Perfil de ${cleanName} cargado.`);
+            };
+
+            profileDisplay.onerror = () => {
+                console.error(`Error al cargar el perfil de ${cleanName}.`);
+                // En caso de error, puedes mostrar un mensaje dentro del iframe o en la página principal
+            };
+        }
+
+        // Evento al hacer clic en el botón
+        searchButton.addEventListener('click', () => {
+            const playerName = playerNameInput.value;
+            loadProfile(playerName);
+        });
+
+        // Evento al presionar 'Enter' en el campo de texto
+        playerNameInput.addEventListener('keypress', (event) => {
+            // Verifica si la tecla presionada es 'Enter' (código 13)
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Evita que el formulario se envíe de forma tradicional
+                const playerName = playerNameInput.value;
+                loadProfile(playerName);
+            }
+        });
+
+        // Carga el perfil de Marielis por defecto al iniciar
+        window.onload = () => {
+             // Puedes dejar el campo vacío si prefieres que el usuario busque primero.
+             // Pero lo dejaremos con el ejemplo Marielis como punto de partida.
+             playerNameInput.value = "Marielis";
+             loadProfile("Marielis"); 
+        };
+    </script>
+</body>
+</html>
